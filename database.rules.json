@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "profile": { ".validate": "newData.hasChildren(['uid', 'name', 'email', 'createdAt'])" },
+        "stats": { ".validate": "newData.hasChildren(['xp', 'level', 'rank', 'coins'])" },
+        "quests": {
+          "$type": {
+            "$qid": {
+              ".validate": "newData.hasChildren(['title', 'type', 'difficulty', 'xpReward', 'coinReward', 'completed', 'createdAt'])"
+            }
+          }
+        },
+        "workout": {
+          "profile": { ".validate": "newData.hasChildren(['height', 'weight', 'age', 'gender', 'bmi', 'dailyCalories'])" },
+          "plans": { "$pid": { ".validate": "newData.hasChildren(['name', 'description', 'schedule'])" } },
+          "logs": { "$lid": { ".validate": "newData.hasChildren(['date', 'duration', 'caloriesBurned', 'completed'])" } },
+          "diet": { "$day": { ".validate": "newData.hasChildren(['day', 'breakfast', 'lunch', 'dinner', 'calories', 'protein'])" } },
+          "stats": { ".validate": "newData.hasChildren(['totalWorkouts', 'currentStreak', 'totalCaloriesBurned'])" }
+        }
+      }
+    },
+    "leaderboard": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
+      "$uid": {
+        ".validate": "newData.hasChildren(['uid', 'level', 'rank', 'xp', 'currentStreak', 'updatedAt'])"
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+query GetCurrentUserProfile @auth(level: USER) {
+  user(key: {id_expr: "auth.uid"}) {
+    username
+    currentLevel
+    totalXp
+    avatarUrl
+    bio
+  }
+}
+
+mutation CreateQuest($title: String!, $difficulty: String!, $xpValue: Int!, $status: String!) @auth(level: USER) {
+  quest_insert(data: {
+    title: $title,
+    difficulty: $difficulty,
+    xpValue: $xpValue,
+    status: $status,
+    attributeCategory: "general",
+    userId_expr: "auth.uid"
+  })
+}
+
+mutation LogQuestCompletion($questId: UUID!, $xp: Int!) @auth(level: USER) {
+  questLog_insert(data: {
+    questId: $questId,
+    xpEarned: $xp,
+    completionDate_time: {now: true},
+    userId_expr: "auth.uid"
+  })
+}
+
+query GetUserQuestLogs @auth(level: USER) {
+  questLogs(where: {userId: {eq_expr: "auth.uid"}}, orderBy: [{completionDate: DESC}]) {
+    xpEarned
+    completionDate
+    quest {
+      title
+    }
+  }
+}

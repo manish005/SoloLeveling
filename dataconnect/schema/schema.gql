@@ -1,0 +1,39 @@
+type User @table {
+  username: String!
+  currentLevel: Int!
+  totalXp: Int64!
+  avatarUrl: String
+  bio: String
+}
+
+type Quest @table {
+  title: String!
+  difficulty: String!
+  attributeCategory: String!
+  xpValue: Int!
+  status: String!
+  dueDate: Timestamp
+  recurrencePattern: String
+  user: User!
+}
+
+type Attribute @table {
+  name: String!
+  currentLevel: Int!
+  currentXp: Int!
+  user: User!
+}
+
+type QuestLog @table {
+  completionDate: Timestamp!
+  xpEarned: Int!
+  quest: Quest!
+  user: User!
+}
+
+type Achievement @table {
+  title: String!
+  criteria: String!
+  dateUnlocked: Timestamp!
+  user: User!
+}
