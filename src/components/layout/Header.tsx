@@ -1,14 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Bell, Search, Menu, Moon, Sun, Coins,
-  ChevronDown, Settings, LogOut, User,
+  ChevronDown, Settings, User, Palette, MessageCircle,
 } from 'lucide-react'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useUIStore } from '../../store/uiStore'
 import { useUserStore } from '../../store/userStore'
-import { useAuthStore } from '../../store/authStore'
-import { logout } from '../../lib/auth'
 import { RANK_COLORS } from '../../types'
 import { xpProgress, xpInLevel, xpForLevel } from '../../services/xpService'
 import { cn } from '../../utils/cn'
@@ -17,9 +15,23 @@ import { ThemeToggle } from '../ui/ThemeToggle'
 export const Header = () => {
   const { toggleSidebar, themeMode } = useUIStore()
   const { stats, profile, notifications } = useUserStore()
-  const navigate = useNavigate()
   const [showNotifs, setShowNotifs] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
+  const profileRef = useRef<HTMLDivElement>(null)
+  const notifRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setShowProfile(false)
+      }
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setShowNotifs(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
 
   const rank = stats?.rank ?? 'E'
   const rankColor = RANK_COLORS[rank]
@@ -27,11 +39,6 @@ export const Header = () => {
   const xpPct = stats ? xpProgress(stats.totalXpEarned) * 100 : 0
   const currentXp = stats ? xpInLevel(stats.totalXpEarned) : 0
   const neededXp = stats ? xpForLevel(stats.level) : 100
-
-  const handleLogout = async () => {
-    await logout()
-    navigate('/login')
-  }
 
   return (
     <header className="fixed top-0 right-0 left-0 h-16 z-30 flex items-center px-4 gap-4 border-b border-white/[0.06] dark:border-white/[0.06]"
@@ -119,7 +126,7 @@ export const Header = () => {
         </div>
 
         {/* Profile dropdown */}
-        <div className="relative">
+        <div ref={profileRef} className="relative">
           <button
             onClick={() => { setShowProfile(!showProfile); setShowNotifs(false) }}
             className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-white/[0.05] transition-colors"
@@ -158,10 +165,14 @@ export const Header = () => {
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] transition-colors">
                     <Settings size={15} /> Settings
                   </Link>
-                  <button onClick={handleLogout}
-                    className="flex w-full items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-danger/70 hover:text-danger hover:bg-danger/10 transition-colors">
-                    <LogOut size={15} /> Sign Out
-                  </button>
+                  <Link to="/settings" onClick={() => setShowProfile(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] transition-colors">
+                    <Palette size={15} /> Appearance
+                  </Link>
+                  <Link to="/settings" onClick={() => setShowProfile(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] transition-colors">
+                    <MessageCircle size={15} /> Support
+                  </Link>
                 </div>
               </motion.div>
             )}

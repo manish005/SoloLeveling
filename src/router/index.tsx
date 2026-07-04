@@ -33,6 +33,7 @@ import { AssistantPage } from '../pages/Assistant/AssistantPage'
 import { NotesPage } from '../pages/Notes/NotesPage'
 import { ShopPage } from '../pages/Shop/ShopPage'
 import { SettingsPage } from '../pages/Settings/SettingsPage'
+import { HabitPage } from '../pages/Habit/HabitPage'
 import { LandingPage } from '../pages/Landing/LandingPage'
 import { AdminPanel } from '../pages/Admin/AdminPanel'
 
@@ -135,6 +136,7 @@ const AppRouter = () => {
           <Route path="/assistant" element={<AssistantPage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/habit" element={<HabitPage />} />
           <Route path="/admin" element={<AdminPanel />} />
         </Route>
 

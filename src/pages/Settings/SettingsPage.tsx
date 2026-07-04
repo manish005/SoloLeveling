@@ -5,12 +5,15 @@ import { useUserStore } from '../../store/userStore'
 import { dbUpdate, PATHS } from '../../lib/database'
 import { uploadToCloudinary } from '../../lib/cloudinary'
 import toast from 'react-hot-toast'
-import { Settings, Shield, User, RefreshCw, Palette, Camera, Loader2 } from 'lucide-react'
+import { Settings, Shield, User, RefreshCw, Palette, Camera, Loader2, LogOut } from 'lucide-react'
 import { Select } from '../../components/ui/Select'
+import { logout } from '../../lib/auth'
+import { useNavigate } from 'react-router-dom'
 
 export const SettingsPage = () => {
   const { user } = useAuthStore()
   const { profile, setProfile } = useUserStore() as any
+  const navigate = useNavigate()
   const [firstName, setFirstName] = useState(profile?.firstName || profile?.name?.split(' ')[0] || '')
   const [lastName, setLastName] = useState(profile?.lastName || profile?.name?.split(' ').slice(1).join(' ') || '')
   const [bio, setBio] = useState(profile?.bio || '')
@@ -67,6 +70,10 @@ export const SettingsPage = () => {
           </button>
           <button className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white font-medium text-left">
             <Shield size={16} /> Privacy & Backup
+          </button>
+          <button onClick={async () => { await logout(); navigate('/login') }}
+            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-danger/70 hover:text-danger hover:bg-danger/10 font-medium text-left mt-4">
+            <LogOut size={16} /> Sign Out
           </button>
         </div>
 

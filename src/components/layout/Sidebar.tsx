@@ -1,15 +1,13 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, CheckSquare, Trophy,
   Calendar, Archive, Users,
-  FileText, Bot, ShoppingBag, Settings, LogOut, ChevronLeft,
-  Zap, Dumbbell,
+  FileText, Bot, ShoppingBag, Settings, ChevronLeft,
+  Zap, Dumbbell, RefreshCw,
 } from 'lucide-react'
 import { useUIStore } from '../../store/uiStore'
 import { useUserStore } from '../../store/userStore'
-import { useAuthStore } from '../../store/authStore'
-import { logout } from '../../lib/auth'
 import { cn } from '../../utils/cn'
 import { RANK_COLORS } from '../../types'
 import { xpProgress, xpInLevel, xpForLevel } from '../../services/xpService'
@@ -26,6 +24,7 @@ const NAV_ITEMS = [
   { label: 'Notes', icon: FileText, to: '/notes' },
   { label: 'AI Assistant', icon: Bot, to: '/assistant' },
   { label: 'Shop', icon: ShoppingBag, to: '/shop' },
+  { label: '21 Days Habit', icon: RefreshCw, to: '/habit' },
 ]
 
 const SETTINGS_ITEMS = [
@@ -35,18 +34,12 @@ const SETTINGS_ITEMS = [
 export const Sidebar = () => {
   const { sidebarCollapsed, sidebarOpen, toggleSidebarCollapse, setSidebarOpen } = useUIStore()
   const { stats, profile } = useUserStore()
-  const navigate = useNavigate()
 
   const rank = stats?.rank ?? 'E'
   const rankColor = RANK_COLORS[rank]
   const xpPct = stats ? xpProgress(stats.totalXpEarned) * 100 : 0
   const currentXp = stats ? xpInLevel(stats.totalXpEarned) : 0
   const neededXp = stats ? xpForLevel(stats.level) : 100
-
-  const handleLogout = async () => {
-    await logout()
-    navigate('/login')
-  }
 
   return (
     <motion.aside
@@ -133,7 +126,7 @@ export const Sidebar = () => {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto no-scrollbar px-2 py-3 space-y-0.5">
         {NAV_ITEMS.map((item) => (
-          <NavLink key={item.to} to={item.to} onClick={() => setSidebarOpen(false)}>
+          <NavLink key={item.to} to={item.to} onClick={() => { if (window.innerWidth < 1024) setSidebarOpen(false) }}>
             {({ isActive }) => (
               <div className={cn('sidebar-item', isActive && 'active')}>
                 <item.icon className="w-4.5 h-4.5 shrink-0" size={18} />
@@ -167,10 +160,6 @@ export const Sidebar = () => {
             )}
           </NavLink>
         ))}
-        <button onClick={handleLogout} className="sidebar-item w-full text-danger/70 hover:text-danger hover:bg-danger/10">
-          <LogOut size={18} className="shrink-0" />
-          {!sidebarCollapsed && <span>Logout</span>}
-        </button>
       </div>
     </motion.aside>
   )
