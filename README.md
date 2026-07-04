@@ -16,7 +16,7 @@
 
   <br/>
 
-  <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/screenshots/banner.png" alt="Solo Leveling Banner" width="90%" style="border-radius: 16px; box-shadow: 0 0 40px rgba(59,130,246,0.3);"/>
+  <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/src/assets/hero.png" alt="Solo Leveling Banner" width="90%" style="border-radius: 16px; box-shadow: 0 0 40px rgba(59,130,246,0.3);"/>
 
   <br/><br/>
 </div>
@@ -30,36 +30,30 @@
     <td width="50%">
       <h3>📊 Dashboard</h3>
       <p>Futuristic ability graph, streak calendar, top skills, and quick-action cards — all in one place.</p>
-      <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/screenshots/dashboard.png" width="100%" style="border-radius: 12px;"/>
     </td>
     <td width="50%">
       <h3>🎯 Quests</h3>
       <p>Daily, weekly, and challenge quests with auto-generated XP & coin rewards upon completion.</p>
-      <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/screenshots/quests.png" width="100%" style="border-radius: 12px;"/>
     </td>
   </tr>
   <tr>
     <td width="50%">
       <h3>🏋️ Workout Log</h3>
       <p>Log sets, reps, duration & mood. Built-in calorie deficit calculator and diet plan toggle (veg/non-veg).</p>
-      <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/screenshots/workout.png" width="100%" style="border-radius: 12px;"/>
     </td>
     <td width="50%">
       <h3>🛡️ Skill Tree</h3>
       <p>12 upgradeable skills (Strength, Intelligence, Discipline, Focus, Charisma, Knowledge, Fitness, Trading, Coding, Communication, Business, Leadership) with XP-based leveling.</p>
-      <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/screenshots/skills.png" width="100%" style="border-radius: 12px;"/>
     </td>
   </tr>
   <tr>
     <td width="50%">
       <h3>📈 Analytics & Profile</h3>
       <p>XP progression charts, quest completion bars, rank tracking, and editable profile with Cloudinary avatar/cover uploads.</p>
-      <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/screenshots/profile.png" width="100%" style="border-radius: 12px;"/>
     </td>
     <td width="50%">
       <h3>🏆 Challenges</h3>
       <p>30 / 60 / 90 / 365-day challenges with progress tracking and achievement badges.</p>
-      <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/screenshots/challenges.png" width="100%" style="border-radius: 12px;"/>
     </td>
   </tr>
 </table>
@@ -146,13 +140,6 @@ Solo Leveling supports both **Dark** and **Light** modes, inspired by the signat
 - ✦ Glowing ability graph with SVG filters
 - ✦ Rank-colored badges (E → SSS)
 - ✦ Smooth framer-motion transitions
-
----
-
-## 📸 Screenshots
-
-> Add your own screenshots to a `screenshots/` folder and place them in the feature table above.  
-> Example files: `screenshots/dashboard.png`, `screenshots/quests.png`, `screenshots/workout.png`, etc.
 
 ---
 
