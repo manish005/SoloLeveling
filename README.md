@@ -16,7 +16,7 @@
 
   <br/>
 
-  <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/src/assets/hero.png" alt="Solo Leveling Banner" width="90%" style="border-radius: 16px; box-shadow: 0 0 40px rgba(59,130,246,0.3);"/>
+  <img src="https://raw.githubusercontent.com/manish005/SoloLeveling/main/snapshot/hero.png" alt="Solo Leveling Banner" width="90%" style="border-radius: 16px; box-shadow: 0 0 40px rgba(59,130,246,0.3);"/>
 
   <br/><br/>
 </div>
