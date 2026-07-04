@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Sidebar } from '../components/layout/Sidebar'
@@ -13,40 +14,43 @@ const pageVariants = {
 }
 
 export const AppLayout = () => {
-  const { sidebarCollapsed, sidebarOpen } = useUIStore()
+  const { sidebarCollapsed, sidebarOpen, setSidebarOpen } = useUIStore()
   const location = useLocation()
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024)
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const sidebarWidth = sidebarCollapsed ? 72 : 260
 
   return (
     <div className="min-h-screen bg-bg-primary">
-      {/* Subtle grid background */}
       <div className="fixed inset-0 grid-bg pointer-events-none z-0 opacity-50" />
 
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Mobile overlay */}
       <AnimatePresence>
         {sidebarOpen && (
           <motion.div
-            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setSidebarOpen(false)}
           />
         )}
       </AnimatePresence>
 
-      {/* Main area — offset by sidebar */}
       <motion.div
-        animate={{ marginLeft: sidebarWidth }}
+        animate={{ marginLeft: isDesktop ? sidebarWidth : 0 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="min-h-screen flex flex-col"
       >
         <Header />
 
-        {/* Page content */}
         <main className="flex-1 pt-16">
           <AnimatePresence mode="wait">
             <motion.div
@@ -64,9 +68,7 @@ export const AppLayout = () => {
         </main>
       </motion.div>
 
-      {/* Global overlays */}
       <LevelUpModal />
-
       <Toaster
         position="bottom-right"
         toastOptions={{

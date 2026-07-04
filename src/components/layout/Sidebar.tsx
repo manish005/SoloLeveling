@@ -33,7 +33,7 @@ const SETTINGS_ITEMS = [
 ]
 
 export const Sidebar = () => {
-  const { sidebarCollapsed, toggleSidebarCollapse } = useUIStore()
+  const { sidebarCollapsed, sidebarOpen, toggleSidebarCollapse, setSidebarOpen } = useUIStore()
   const { stats, profile } = useUserStore()
   const navigate = useNavigate()
 
@@ -50,9 +50,9 @@ export const Sidebar = () => {
 
   return (
     <motion.aside
-      animate={{ width: sidebarCollapsed ? 72 : 260 }}
+      animate={{ width: sidebarCollapsed ? 72 : 260, x: sidebarOpen ? 0 : -300 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="fixed left-0 top-0 bottom-0 z-40 flex flex-col bg-bg-secondary border-r border-white/[0.06] overflow-hidden"
+      className="fixed left-0 top-0 bottom-0 z-50 flex flex-col bg-bg-secondary border-r border-white/[0.06] overflow-hidden lg:z-40 lg:translate-x-0"
     >
       {/* Logo */}
       <div className={cn(
@@ -133,7 +133,7 @@ export const Sidebar = () => {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto no-scrollbar px-2 py-3 space-y-0.5">
         {NAV_ITEMS.map((item) => (
-          <NavLink key={item.to} to={item.to}>
+          <NavLink key={item.to} to={item.to} onClick={() => setSidebarOpen(false)}>
             {({ isActive }) => (
               <div className={cn('sidebar-item', isActive && 'active')}>
                 <item.icon className="w-4.5 h-4.5 shrink-0" size={18} />
